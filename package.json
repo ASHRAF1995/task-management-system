@@ -1,0 +1,13 @@
+{
+  "name": "arabic-task-management-mvp",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "vite --host 0.0.0.0",
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^7.1.7"
+  }
+}

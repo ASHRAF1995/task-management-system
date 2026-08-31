@@ -1,0 +1,7 @@
+cd /d "C:\Users\PC\.codex\.chatgpt-projects\g-p-6a934dda41bc8191bf711f237e1905af"
+npm.cmd run dev
+
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.56.1:5173/
+  ➜  Network: http://192.168.1.4:5173/
