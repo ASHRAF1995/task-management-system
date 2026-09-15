@@ -10,3 +10,8 @@ obj/
 *.user
 .vs/
 backend/Injaz.Api/App_Data/
+
+# النشر
+deploy/
+backend/Injaz.Api/wwwroot/
+backend/Injaz.Api/appsettings.Production.json

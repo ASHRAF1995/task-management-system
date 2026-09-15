@@ -130,6 +130,10 @@ else
 
 app.UseStatusCodePages();
 
+// الواجهة (نسخة Vite المبنية) بتتقدّم من wwwroot على نفس الموقع
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();

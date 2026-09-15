@@ -1,5 +1,6 @@
 // عميل بسيط للتعامل مع Injaz API
-const API_BASE = (import.meta.env?.VITE_API_URL || '').replace(/\/$/, '');
+// افتراضياً الـ API على نفس الموقع (مسار نسبي)، فالنسخة تشتغل حتى لو اترفعت في فولدر فرعي
+const API_BASE = (import.meta.env?.VITE_API_URL || '.').replace(/\/$/, '');
 const TOKEN_KEY = 'injaz-token';
 const USER_KEY = 'injaz-user';
 

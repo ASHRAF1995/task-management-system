@@ -118,6 +118,51 @@ backend/
     └── Infrastructure/         # إضافة مخطط Bearer لوثيقة OpenAPI
 ```
 
+## النشر على السيرفر (Windows / IIS)
+
+الـ API والواجهة بيترفعوا كموقع واحد: الواجهة بتتبني وتتحط في `wwwroot`، والـ API بيقدّمها على نفس الدومين، فمش محتاج CORS ولا إعدادات عنوان.
+
+### 1) تجهيز النسخة
+
+من جذر المشروع على جهازك:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\publish.ps1
+```
+
+السكربت بيعمل الآتي:
+
+- بينشئ `appsettings.Production.json` بمفتاح JWT عشوائي، لو الملف مش موجود.
+- بيعمل `dotnet publish` كـ self-contained لـ `win-x64`، فمش محتاج .NET 10 يكون متسطّب على السيرفر.
+- `dotnet publish` بيبني الواجهة وينسخها لـ `wwwroot` تلقائياً.
+- الناتج بيطلع في `deploy\publish\`، ونسخة مضغوطة منه في `deploy\injaz-release.zip`.
+
+لو السيرفر عليه ASP.NET Core 10 Hosting Bundle، تقدر تطلع نسخة أصغر:
+
+```powershell
+.\publish.ps1 -SelfContained:$false
+```
+
+**أو من Visual Studio:** زرار Publish مع بروفايل Web Deploy بتاع site4now بيعمل نفس الخطوات، لأن بناء الواجهة ونسخها لـ `wwwroot` جوه ملف المشروع نفسه. بس اتأكد الأول إن `appsettings.Production.json` موجود، أو شغّل `publish.ps1` مرة واحدة عشان يعمله.
+
+### 2) الرفع
+
+1. ارفع **محتويات** `deploy\publish` (أو فك `injaz-release.zip`) على جذر الموقع.
+2. ادّي الـ Application Pool صلاحية **كتابة** على فولدري `App_Data` و`logs`، عشان المرفقات والسجلات.
+3. افتح الموقع، وادخل بحساب مدير النظام.
+
+### 3) لو الموقع طلع خطأ 500.xx
+
+- في `web.config` خلّي `stdoutLogEnabled="true"`، وافتح الموقع، وبعدين اقرا ملفات `logs\stdout_*.log`.
+- اتأكد إن السيرفر يقدر يوصل لقاعدة البيانات، وإن `ConnectionStrings:Default` صحيح.
+- رجّع `stdoutLogEnabled` لـ `false` بعد ما تحل المشكلة.
+
+### ملاحظات
+
+- `appsettings.Development.json` مش بيتنشر. البيئة على السيرفر `Production`، ومحددة في `web.config`.
+- صفحة Scalar (`/scalar/v1`) شغالة في Development بس.
+- مع كل نشر جديد ارفع كل الملفات **ما عدا** فولدر `App_Data`، عشان المرفقات المرفوعة ما تتمسحش.
+
 ## قبل النشر للإنتاج
 
 - ضع مفتاح JWT قوياً خارج الكود، مثلاً:

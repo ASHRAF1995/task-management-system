@@ -4,6 +4,8 @@ const API_TARGET = process.env.VITE_API_PROXY || 'http://localhost:5080';
 
 // أثناء التطوير: أي طلب يبدأ بـ /api يُحوَّل إلى الـ .NET API
 export default defineConfig({
+  // مسارات نسبية للملفات عشان النسخة تشتغل من جذر الموقع أو من فولدر فرعي
+  base: './',
   server: {
     proxy: {
       '/api': {
