@@ -1,0 +1,16 @@
+@api = http://localhost:5080
+
+### تسجيل الدخول (انسخ token من الرد)
+POST {{api}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "{{email}}", "password": "{{password}}" }
+
+### قائمة المهام
+@token = paste-token-here
+GET {{api}}/api/tasks
+Authorization: Bearer {{token}}
+
+### الإشعارات
+GET {{api}}/api/notifications
+Authorization: Bearer {{token}}

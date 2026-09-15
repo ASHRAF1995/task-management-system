@@ -1,3 +1,12 @@
 node_modules/
 dist/
 .vite/
+.env
+.env.local
+
+# .NET
+bin/
+obj/
+*.user
+.vs/
+backend/Injaz.Api/App_Data/
